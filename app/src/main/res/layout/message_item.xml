@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+    >
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/avatar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="mirko_chat"
+        android:id="@+id/username"
+        android:layout_toRightOf="@+id/avatar"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Vestibulum euismod augue quis erat volutpat condimentum. Nunc vel lacus vestibulum, facilisis quam quis, pretium neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas."
+        android:id="@+id/body"
+        android:layout_below="@+id/username"
+        android:layout_toRightOf="@+id/avatar"
+        />
+</RelativeLayout>

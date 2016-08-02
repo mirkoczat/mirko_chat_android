@@ -1,0 +1,61 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "pl.mirkoczat.mirkoczat"
+        minSdkVersion 21
+        targetSdkVersion 23
+        versionCode 4
+        versionName "1.0.4"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'sample_exchange.js'
+        exclude 'logging.properties'
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'org.jetbrains.anko:anko-sdk23:0.8.2'
+    compile 'org.jetbrains.anko:anko-appcompat-v7:0.8.2'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.squareup.okhttp3:okhttp-ws:3.2.0'
+    //compile 'com.github.eoinsha:JavaPhoenixChannels:0e49817'
+    //compile 'com.github.bryanjos:JavaPhoenixChannels:-SNAPSHOT'
+    // JavaPhoenixChannels nie ma ani lib ani mavena
+}
+buildscript {
+    ext.kotlin_version = '1.0.0'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+repositories {
+    mavenCentral()
+    mavenLocal()
+
+}
