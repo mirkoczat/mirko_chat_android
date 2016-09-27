@@ -14,23 +14,25 @@ object Connection : AnkoLogger {
     var token = ""
     var onError: (Envelope) -> Unit = {}
     fun connect(context: Context, channelName: String) {
-        disconnect()
+        async() {
+            disconnect()
 
-        socket = Socket("ws://mirkoczat.pl/socket/websocket?tag=$channelName&token=$token")
-        socket?.connect()
-        channel = socket?.chan("rooms:" + channelName, null)
-        channel?.join()?.receive("ignore") {
-            envelope -> info("ignore ${envelope}")
-        }?.receive("error") { envelope ->
-            info("error ${envelope}")
-            onError(envelope)
-        }?.receive("ok") { envelope -> info("ok ${envelope}") }
-        channel?.onClose { envelope -> info("closed ${envelope}") }
-        channel?.onError { envelope ->
-            info("error ${envelope}")
-        }
-        for (event in arrayOf("msg:send", "info:cmd", "info:global", "info:room")) {
-            channel?.on(event) {envelope -> Stream.trigger(event, envelope)}
+            socket = Socket("ws://mirkoczat.pl/socket/websocket?tag=$channelName&token=$token")
+            socket?.connect()
+            channel = socket?.chan("rooms:" + channelName, null)
+            channel?.join()?.receive("ignore") {
+                envelope -> info("ignore ${envelope}")
+            }?.receive("error") { envelope ->
+                info("error ${envelope}")
+                onError(envelope)
+            }?.receive("ok") { envelope -> info("ok ${envelope}") }
+            channel?.onClose { envelope -> info("closed ${envelope}") }
+            channel?.onError { envelope ->
+                info("error ${envelope}")
+            }
+            for (event in arrayOf("msg:send", "info:cmd", "info:global", "info:room")) {
+                channel?.on(event) {envelope -> Stream.trigger(event, envelope)}
+            }
         }
     }
 
@@ -40,9 +42,11 @@ object Connection : AnkoLogger {
     }
 
     fun send(message: String): Boolean {
-        channel?.push("msg:send", ObjectNode(JsonNodeFactory.instance)
-            .put("body", message)
-        )
+        async() {
+            channel?.push("msg:send", ObjectNode(JsonNodeFactory.instance)
+                    .put("body", message)
+            )
+        }
         return true
     }
 

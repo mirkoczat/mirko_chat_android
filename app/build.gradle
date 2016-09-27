@@ -9,13 +9,23 @@ android {
         applicationId "pl.mirkoczat.mirkoczat"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 4
-        versionName "1.0.4"
+        versionCode 5
+        versionName "1.0.5"
+    }
+    signingConfigs {
+        debug {
+            storeFile file("debug.keystore")
+        }
+        release {
+            storeFile file("~/android_signing.jks")
+            keyAlias "mirkoczat"
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     packagingOptions {
@@ -46,7 +56,7 @@ dependencies {
     // JavaPhoenixChannels nie ma ani lib ani mavena
 }
 buildscript {
-    ext.kotlin_version = '1.0.0'
+    ext.kotlin_version = '1.0.4'
     repositories {
         mavenCentral()
     }
